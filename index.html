@@ -177,7 +177,26 @@
         });
     }
     // 8.
-
+    function evaluateExpression(expression, varValObj){
+        for (var variable in varValObj){
+            eval("var " + variable + " = " + varValObj[variable] + ";");
+        }
+        return eval(expression);
+    }
+    function testEvaluateExpression(){
+        var result = evaluateExpression("x+y",{x:15, y:3});
+        console.assert(result === 18,{
+            "function": 'evaluateExpression("x+y",{x:15, y:3})',
+            "expected": 18,
+            "result": result
+        });
+        result = evaluateExpression("a-b+c",{a:20, b:12, c:3});
+        console.assert(result === 11,{
+            "function": 'evaluateExpression("a-b+c",{a:20, b:12, c:3})',
+            "expected": 11,
+            "result": result
+        });
+    }
 </script>
 </body>
 </html>
