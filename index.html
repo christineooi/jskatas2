@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Javascript Katas 2</title>
+</head>
+<body>
+    <header><h1>Javascript Katas 2</h1></header>
+    <ol>
+        <li>Reverse a string</li>
+        <li>Reverse a sentence</li>
+        <li>Find the minimum value in an array</li>
+        <li>Find the maximum value in an array</li>
+        <li>Calculate a remainder (given a numerator and denominator)</li>
+        <li>Return distinct values from a list including duplicates</li>
+        <li>Return distinct values and their counts</li>
+        <li>Given a string of expressions (only variables, +, and -) and an object describing a set of 
+            variable/value pairs like {a: 1, b: 7, c: 3, d: 14}, return the result of the 
+            expression ("a + b+c -d" would be -3)</li>
+    </ol>
+
+<script>
+    // 1.
+    function reverseString(str){
+        return str.split("").reverse().join("");
+    }
+    //Unit tests
+    function testReverseString(){
+        let result = reverseString("hello world");
+        console.assert(result === "dlrow olleh",{
+            "function": 'reverseString("hello world")',
+            "expected": "dlrow olleh",
+            "result": result
+        });
+        result = reverseString("(222)333-4444");
+        console.assert(result === "4444-333)222(",{
+            "function": 'reverseString("(222)333-4444")',
+            "expected": "4444-333)222(",
+            "result": result
+        });
+    }
+
+    // 2.
+    function reverseSentence(sentence){
+        return sentence.split(" ").reverse().join(" ");
+    }
+    //Unit tests
+    function testReverseSentence(){
+        let result = reverseSentence("I love music");
+        console.assert(result === "music love I",{
+            "function": 'reverseSentence("I love music")',
+            "expected": "music love I",
+            "result": result
+        });
+        result = reverseSentence("There are 28 ounces in a gallon.");
+        console.assert(result === "gallon. a in ounces 28 are There",{
+            "function": 'reverseSentence("There are 28 ounces in a gallon.")',
+            "expected": "gallon. a in ounces 28 are There",
+            "result": result
+        });
+    }
+    // 3.
+    function minValueInArray(arr){
+        return Math.min.apply(null, arr);
+    }
+    //Unit tests
+    function testMinValueInArray(){
+        var numArray = [4,51,1,89]
+        let result = minValueInArray(numArray);
+        console.assert(result === 1,{
+            "function": 'minValueInArray("numArray")',
+            "expected": 1,
+            "result": result
+        });
+        numArray = [31,0,-15,9]
+        result = minValueInArray(numArray);
+        console.assert(result === -15,{
+            "function": 'minValueInArray("numArray")',
+            "expected": -15,
+            "result": result
+        });
+    }
+    // 4.
+    function maxValueInArray(arr){
+        return Math.max.apply(null, arr);
+    }
+    // Unit tests
+    function testMaxValueInArray(){
+        var numArray = [4,51,1,89]
+        let result = maxValueInArray(numArray);
+        console.assert(result === 89,{
+            "function": 'maxValueInArray("numArray")',
+            "expected": 89,
+            "result": result
+        });
+        numArray = [31,0,-15,9]
+        result = maxValueInArray(numArray);
+        console.assert(result === 31,{
+            "function": 'maxValueInArray("numArray")',
+            "expected": 31,
+            "result": result
+        });
+    }
+    // 5. 
+    function getRemainder(numerator, denominator){
+        return numerator%denominator;
+    }
+    // Unit tests
+    function testGetRemainder(){
+        var result = getRemainder(4,5);
+        console.assert(result === 4,{
+            "function": 'getRemainder("4,5")',
+            "expected": 4,
+            "result": result
+        });
+        var result = getRemainder(110,11);
+        console.assert(result === 0,{
+            "function": 'getRemainder("110,11")',
+            "expected": 0,
+            "result": result
+        });
+    }
+    // 6.
+    function getDistinctValFromList(list){
+        var array = list.split(" ");
+        // Callback function
+        function onlyUnique(value, index, arr) { 
+            return arr.indexOf(value) === index;
+        }
+        var uniqueArray = array.filter(onlyUnique);
+        return uniqueArray.join(" ");
+    }
+    // Unit tests
+    function testGetDistinctValFromList(){
+        var result = getDistinctValFromList("8 36 16 2 16 45 8");
+        console.assert(result === "8 36 16 2 45",{
+            "function": 'getDistinctValFromList("8 36 16 2 16 45 8")',
+            "expected": "8 36 16 2 45",
+            "result": result
+        });
+
+        result = getDistinctValFromList("0 0 0 0 0");
+        console.assert(result === "0",{
+            "function": 'getDistinctValFromList("0 0 0 0 0")',
+            "expected": "0",
+            "result": result
+        });
+    }    
+    // 7. 
+    function getDistinctValAndCounts(list){
+        var array = list.split(" ");
+        var counts = {};
+        var uniqueValAndCountsArray = [];
+        for (let i=0; i<array.length; i++){
+            counts[array[i]] = 1 + (counts[array[i]] || 0);
+        }
+        for (var distinctVal in counts){
+            uniqueValAndCountsArray.push(distinctVal + "(" + counts[distinctVal] + ")");
+        }
+        return uniqueValAndCountsArray.join(" ");
+    }
+    // Unit tests
+    function testGetDistinctValAndCounts(){
+        var result = getDistinctValAndCounts("9 9 3 9 10 9");
+        console.assert(result === "3(1) 9(4) 10(1)",{
+            "function": 'getDistinctValAndCounts("9 9 3 9 10 9")',
+            "expected": "3(1) 9(4) 10(1)",
+            "result": result
+        });
+        result = getDistinctValAndCounts("0 0 0 0 0 0 0 0 0 0");
+        console.assert(result === "0(10)",{
+            "function": 'getDistinctValAndCounts("0 0 0 0 0 0 0 0 0 0")',
+            "expected": "0(10)",
+            "result": result
+        });
+    }
+    // 8.
+
+</script>
+</body>
+</html>
